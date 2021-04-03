@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Reset
 Color_Off='\033[0m'       # Text Reset
 
@@ -71,4 +73,4 @@ if [ $input -eq 1 ]; then web
 elif [ $input -eq 2 ]; then db
 elif [ $input -eq 3 ]; then stat
 else echo "No option matched"
-
+fi
