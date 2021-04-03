@@ -11,10 +11,7 @@ Vagrant.configure("2") do |config|
       config.vm.define "node-#{i}" do |node|
         node.vm.box = "geerlingguy/ubuntu1804"
         node.vm.network "private_network", ip: "192.168.#{i}5.#{i+1}"
-	node.vm.hostname = "node-#{i}"
-        node.vm.provision "shell", inline: <<-SHELL
-          sudo apt-get install net-tools -y
-        SHELL   
+	node.vm.hostname = "node-#{i}"  
       end
     end
 end
