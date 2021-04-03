@@ -17,7 +17,8 @@ sudo apt-get update -y && sudo apt-get upgrade -y
 
 # Choose Install
 echo -e "$Cyan \n === Choose Install or Check Status === $Color_Off"
-read -r -p "1. Web Server \n 2. Database Server \n 3. Check Status \n Option (1|2|3) : " input 
+echo -e "1. Web Server \n2. Database Server \n3. Check Status \nOption (1|2|3) ? "
+read -p "Answer : " input
 
 function web
 {
@@ -25,7 +26,7 @@ function web
   ## Install Web Server
   echo -e "$Cyan \n Installing Web Server $Color_Off"
   sudo apt-get install -y apache2 php php-mysql
-  
+  sudo service apache2 start
   ## Permissions
   echo -e "$Cyan \n Permissions for /var/www $Color_Off"
   `sudo chown -R $USER:$USER /var/www`
@@ -43,34 +44,30 @@ function db
 
 }
 
-function stat
+function check
 {
-
+  
   ##Checking Services Status
-  echo -e "$Cyan \n Checking Services $Color_Off"
+  read -p "Check Service : " serv
 
-  stat = dead
-
-  for serv in apache2 mysql
-   do
-   sudo service $serv status | grep -i 'running\|dead' | awk '{print $3}' | sed 's/[()]//g' | while read output;
-    do
-    echo $output
-      if [ "$output" == "$stat" ]; then
+  local output="`sudo service $serv status | grep -i 'running\|dead' | awk '{print $3}' | sed 's/[()]//g'`"
+  
+  if [ "${output}" == "running" ]; then
+        echo -e "$Green $serv service is RUNNING $Color_Off"
+  elif [ "${output}" == "dead" ]; then
+        echo -e "$Red $serv service is DOWN now ! $Color_Off"
         echo -e "$Cyan \n Starting Service $Color_Off" 
         sudo service $serv start
         echo -e "$Green \n $serv service is UP now !"
-      else
-        echo -e "$Green \n $serv service is running"
-      fi
-    done
-  done
+  else
+        echo -e "$Red $serv is not installed ! $Color_Off"
+  fi
 
 }
 
 ## Running Command
 if [ $input -eq 1 ]; then web
 elif [ $input -eq 2 ]; then db
-elif [ $input -eq 3 ]; then stat
-else echo "No option matched"
+elif [ $input -eq 3 ]; then check
+else echo -e "$Red No option matched $Color_Off"
 fi
