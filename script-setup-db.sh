@@ -31,7 +31,7 @@ Cyan='\033[0;36m'         # Cyan
        git clone https://github.com/Jasnicahuang/sosial-media.git social-media
 
      read -r -p "Do you want to setup Social-Media Database? (Y/N) : " smdb_choice
-     if [ $smdb_choice == "Y" ]; then
+     if [ $smdb_choice == "Y" -o $smdb_choice == "y" ]; then
 
         sudo mysql -u root <<CMD_EOF
         CREATE USER 'devopscilsy'@'localhost' IDENTIFIED BY '1234567890';
@@ -44,7 +44,7 @@ CMD_EOF
      fi
 
      read -r -p "Do you want to setup Wordpress Database? (Y/N) : " wpdb_choice
-     if [ $wpdb_choice == "Y" -o $wpdb_choice = 'y' ]; then
+     if [ $wpdb_choice == "Y" -o $wpdb_choice == "y" ]; then
         read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name
                 read -r -p " [1.2] Enter Wordpress 'Database Username', you want to create : " wpdb_user
                 read -r -p " [1.3] Enter Wordpress 'Database Password', you want to create : " wpdb_password
