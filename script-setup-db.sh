@@ -48,7 +48,9 @@ CMD_EOF
         read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name
                 read -r -p " [1.2] Enter Wordpress 'Database Username', you want to create : " wpdb_user
                 read -r -p " [1.3] Enter Wordpress 'Database Password', you want to create : " wpdb_password
-     fi
+     else
+         echo "Skipped" 
+    fi
 
         if [ -z $wpdb_name ]; then wpdb_name='wordpress'; fi
         if [ -z $wpdb_user ]; then wpdb_user='wp_user'; fi
