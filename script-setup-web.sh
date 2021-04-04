@@ -39,6 +39,7 @@ Cyan='\033[0;36m'         # Cyan
     sudo chown -R $USER:$USER /var/www/
     echo -e "$Red \n === Disable Apache Default Config === $Color_Off"
     sudo a2dissite 000-default.conf
+    sudo service apache2 restart
 
     for dir in landing-page jasnica-wordpress social-media
       do
@@ -48,9 +49,11 @@ Cyan='\033[0;36m'         # Cyan
         sudo chown -R $USER:$USER /var/www/"${dir}.com"
         sudo chmod -R 755 /var/www/"${dir}.com"
         echo -e "$Yellow \n === Create File Config ${dir} in /etc/apache2/sites-available === $Color_Off"
-        sudo echo -en "\n<VirtualHost *:80>\n\tServerAdmin admin@${dir}.com\n\tServerName ${dir}.com\n\tServerAlias www.${dir}.com\n\tDocumentRoot /var/www/html/${dir}.com\n\tErrorLog '${APACHE_LOG_DIR}'/error.log\n\tCustomLog '${APACHE_LOG_DIR}'/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/"${dir}.com".conf
+        sudo echo -en "\n<VirtualHost *:80>\n\tServerAdmin admin@${dir}.com\n\tServerName ${dir}.com\n\tServerAlias www.${dir}.com\n\tDocumentRoot /var/www/html/${dir}.com" >>/etc/apache2/sites-available/"${dir}.com".conf
+        sudo echo -e "\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/"${dir}.com".conf"
         echo -e "$Green \n === Enabled Link ${dir} === $Color_Off"
         sudo a2ensite "${dir}.com".conf
+        sudo service apache2 restart
         echo -e "$Yellow \n === Adding Server Name ${dir} into /etc/hosts === $Color_Off"
         sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${dir}.com >> /etc/hosts"
       done
