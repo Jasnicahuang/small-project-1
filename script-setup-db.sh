@@ -19,6 +19,7 @@ Cyan='\033[0;36m'         # Cyan
   if [ $input -eq 1 ];then
 
      # Cloning Repository
+       mkdir /home/$USER/projects
        cd /home/$USER/projects/
        echo -e "$Cyan \n === Clone Source Code Wordpress === $Color_Off"
        git clone https://github.com/Jasnicahuang/WordPress.git jasnica-wordpress
