@@ -47,7 +47,9 @@ Cyan='\033[0;36m'         # Cyan
         use mysql;
         CREATE USER 'root'@'%' IDENTIFIED BY '12345';
 CMD_EOF
+     echo -e "$Cyan \n === Import Dump SQL to DBSOSMED === $Color_Off"
         sudo mysql -u devopscilsy -p dbsosmed < /home/$USER/projects/social-media/dump.sql
+     echo -e "$Green Done $Color_Off"
      else
          echo "Skipped"
      fi
@@ -70,7 +72,6 @@ CMD_EOF
         CREATE USER '$wpdb_user'@'$ip_address' IDENTIFIED BY '$wpdb_password';
         CREATE DATABASE $wpdb_name;
         GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'$ip_address' IDENTIFIED BY '$wpdb_password';
-        FLUSH PRIVILEGES;
 CMD_EOF
 
      echo -e "$Green \n === Setup Database Server Completed === $Color_Off"
