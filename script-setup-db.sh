@@ -17,7 +17,7 @@ Cyan='\033[0;36m'         # Cyan
   read -p "Answer : " input
 
   echo -e "$Cyan \n === Get My IP MYSQL === $Color_Off"
-  ip_address = "`hostname -I | awk '{print $2}')`"
+  ip_address = "`hostname -I | awk '{print $2}'`"
   echo -e "$Green IP Address = $ip_address $Color_Off"
   echo -e "$Cyan \n === Bind IP MYSQL === $Color_Off"
   sudo sed -i 's/127.0.0.1/'$ip_address'/g' /etc/mysql/mysql.conf.d/mysqld.cnf
