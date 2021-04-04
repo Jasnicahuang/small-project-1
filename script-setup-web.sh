@@ -61,10 +61,10 @@ Cyan='\033[0;36m'         # Cyan
         sudo service apache2 restart
         echo -e "$Yellow \n === Adding Server Name ${repo[$i-1]} into /etc/hosts === $Color_Off"
         sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${repo[$i-1]}.com >> /etc/hosts"
-        if [ ${repo[$i-1] == "social-media"}; then
+        if [ ${repo[$i-1]} == "social-media"}; then
            sudo sed -i 's/localhost/192.168.25.3/g' /var/www/"${repo[$i-1]}.com"/config.php
            echo "Done"
-        elif [ ${repo[$i-1] == "jasnica-wordpress" ];
+        elif [ ${repo[$i-1]} == "jasnica-wordpress" ]; then
              read -r -p "Do you want to setup Wordpress Config? (Y/N) : " wpdb_choice
 	     if [ $wpdb_choice = 'Y' -o $wpdb_choice = 'y' ]; then
 		read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name

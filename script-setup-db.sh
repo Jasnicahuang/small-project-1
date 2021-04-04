@@ -38,7 +38,7 @@ Cyan='\033[0;36m'         # Cyan
      fi
 
      read -r -p "Do you want to setup Wordpress Database? (Y/N) : " wpdb_choice
-     if [ $wpdb_choice == "Y" ]; then
+     if [ $wpdb_choice == "Y" -o $wpdb_choice = 'y' ]; then
         read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name
                 read -r -p " [1.2] Enter Wordpress 'Database Username', you want to create : " wpdb_user
                 read -r -p " [1.3] Enter Wordpress 'Database Password', you want to create : " wpdb_password
