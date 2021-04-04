@@ -19,6 +19,9 @@ Cyan='\033[0;36m'         # Cyan
   echo -e "$Cyan \n === Bind IP MYSQL === $Color_Off"
   sudo sed -i 's/127.0.0.1/192.168.25.3/g' /etc/mysql/mysql.conf.d/mysqld.cnf
   echo -e "$Green Success bind 192.168.25.3 $Color_Off"
+  echo -e "$Cyan \n === Restart MYSQL Service === $Color_Off" 
+  sudo service mysql restart
+  echo -e "$Green Done $Color_Off"
 
   if [ $input -eq 1 ];then
 
@@ -30,6 +33,7 @@ Cyan='\033[0;36m'         # Cyan
        echo -e "$Cyan \n === Clone Source Code Social-Media === $Color_Off"
        git clone https://github.com/Jasnicahuang/sosial-media.git social-media
 
+     echo -e "$Cyan \n === Setup Database Social-Media === $Color_Off"
      read -r -p "Do you want to setup Social-Media Database? (Y/N) : " smdb_choice
      if [ $smdb_choice == "Y" -o $smdb_choice == "y" ]; then
 
@@ -43,6 +47,7 @@ CMD_EOF
          echo "Skipped"
      fi
 
+     echo -e "$Cyan \n === Setup Database Wordpress === $Color_Off"
      read -r -p "Do you want to setup Wordpress Database? (Y/N) : " wpdb_choice
      if [ $wpdb_choice == "Y" -o $wpdb_choice == "y" ]; then
         read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name
@@ -66,6 +71,8 @@ CMD_EOF
      else
          echo "Skipped"
      fi
+
+     echo -e "$Green \n === Setup Database Server Completed === $Color_Off"
 
   else
       echo "Abort Setup Database Server"
