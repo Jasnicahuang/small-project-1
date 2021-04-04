@@ -41,21 +41,26 @@ Cyan='\033[0;36m'         # Cyan
     sudo a2dissite 000-default.conf
     sudo service apache2 restart
 
-    for dir in landing-page jasnica-wordpress social-media
+    declare -a repo=("landing-page" "jasnica-wordpress" "social-media")
+    repolength=${#repo[@]}
+    for (( i=1; i<${repolength}+1; i++));
+    #for dir in landing-page jasnica-wordpress social-media
       do
-        echo -e "$Yellow \n === Create Directory ${dir} in /var/www === $Color_Off"
-        mv /home/vagrant/projects/${dir} /var/www/"${dir}.com"
-        echo -e "$Green Folder ${dir}.com created in /var/www/ $Color_Off"
-        sudo chown -R $USER:$USER /var/www/"${dir}.com"
-        sudo chmod -R 755 /var/www/"${dir}.com"
-        echo -e "$Yellow \n === Create File Config ${dir} in /etc/apache2/sites-available === $Color_Off"
-        sudo echo -en "\n<VirtualHost *:80>\n\tServerAdmin admin@${dir}.com\n\tServerName ${dir}.com\n\tServerAlias www.${dir}.com\n\tDocumentRoot /var/www/${dir}.com" >>/etc/apache2/sites-available/"${dir}.com".conf
-        sudo echo -e "\n\tErrorLog \${APACHE_LOG_DIR}/error.log\n\tCustomLog \${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/"${dir}.com".conf
-        echo -e "$Green \n === Enabled Link ${dir} === $Color_Off"
-        sudo a2ensite "${dir}.com".conf
+        echo -e "$Yellow \n === Create Directory ${repo[$i-1]} in /var/www === $Color_Off"
+        mv /home/vagrant/projects/${repo[$i-1]} /var/www/"${repo[$i-1]}.com"
+        echo -e "$Green Folder ${repo[$i-1]}.com created in /var/www/ $Color_Off"
+        sudo chown -R $USER:$USER /var/www/"${repo[$i-1]}.com"
+        sudo chmod -R 755 /var/www/"${repo[$i-1]}.com"
+        echo -e "$Yellow \n === Create File Config ${repo[$i-1]} in /etc/apache2/sites-available === $Color_Off"
+        sudo echo -en "<Directory /var/www/${repo[$i-1]}.com>\n\tAllowOverride All\n</Directory>" >/etc/apache2/sites-available/"${repo[$i-1]}.com".conf
+        sudo echo -en "\n<VirtualHost *:808$i>\n\tServerAdmin admin@${repo[$i-1]}.com\n\tServerName ${repo[$i-1]}.com\n\tServerAlias www.${repo[$i-1]}.com\n\tDocumentRoot /var/www/${repo[$i-1]}.com" >>/etc/apache2/sites-available/"${repo[$i-1]}.com".conf
+        sudo echo -e "\n\tErrorLog \${APACHE_LOG_DIR}/error.log\n\tCustomLog \${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/"${repo[$i-1]}.com".conf
+        sudo -- sh -c "echo Listen 808$i >> /etc/apache2/ports.conf"
+        echo -e "$Green \n === Enabled Link ${repo[$i-1]} === $Color_Off"
+        sudo a2ensite "${repo[$i-1]}.com".conf
         sudo service apache2 restart
-        echo -e "$Yellow \n === Adding Server Name ${dir} into /etc/hosts === $Color_Off"
-        sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${dir}.com >> /etc/hosts"
+        echo -e "$Yellow \n === Adding Server Name ${repo[$i-1]} into /etc/hosts === $Color_Off"
+        sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${repo[$i-1]}.com >> /etc/hosts"
       done
     echo -e "$Cyan \n === Restart Service Apache === $Color_Off"
     sudo service apache2 restart
