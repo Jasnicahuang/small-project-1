@@ -53,7 +53,7 @@ Cyan='\033[0;36m'         # Cyan
         echo -e "$Green \n === Enabled Link ${dir} === $Color_Off"
         sudo a2ensite "${dir}.com".conf
         echo -e "$Yellow \n === Adding Server Name ${dir} into /etc/hosts === $Color_Off"
-        sudo --sh -c "echo -en "$(hostname -I | awk '{print $2}')\t${dir}.com" >>/etc/hosts"
+        sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${dir}.com >> /etc/hosts"
       done
     echo -e "$Cyan \n === Restart Service Apache === $Color_Off"
     sudo service apache2 restart
