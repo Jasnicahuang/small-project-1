@@ -61,9 +61,11 @@ Cyan='\033[0;36m'         # Cyan
         sudo service apache2 restart
         echo -e "$Yellow \n === Adding Server Name ${repo[$i-1]} into /etc/hosts === $Color_Off"
         sudo -- sh -c "echo $(hostname -I | awk '{print $2}') ${repo[$i-1]}.com >> /etc/hosts"
-        if [ ${repo[$i-1]} == "social-media"}; then
+
+        echo -e "$Yellow \n === Configure Files on ${repo[$i-1]}.com === $Color_Off"
+        if [ ${repo[$i-1]} == "social-media" ]; then
            sudo sed -i 's/localhost/192.168.25.3/g' /var/www/"${repo[$i-1]}.com"/config.php
-           echo "Done"
+           echo -e "$Green Done $Color_Off"
         elif [ ${repo[$i-1]} == "jasnica-wordpress" ]; then
              read -r -p "Do you want to setup Wordpress Config? (Y/N) : " wpdb_choice
 	     if [ $wpdb_choice = 'Y' -o $wpdb_choice = 'y' ]; then
@@ -81,9 +83,9 @@ Cyan='\033[0;36m'         # Cyan
 	     sudo sed -i 's/username_here/'$wpdb_user'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
 	     sudo sed -i 's/password_here/'$wpdb_password'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
              sudo sed -i 's/localhost/192.168.25.3/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
-             echo "Done"
+             echo -e "$Green Done $Color_Off"
         else
-             echo "Done"
+             echo -e "$Green Done $Color_Off"
         fi
       done
     echo -e "$Cyan \n === Restart Service Apache === $Color_Off"
