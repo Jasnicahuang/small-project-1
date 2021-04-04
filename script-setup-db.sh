@@ -16,6 +16,10 @@ Cyan='\033[0;36m'         # Cyan
   echo -e "1. Yes, Continue \n2. No, Abort \nOption (1|2) ? "
   read -p "Answer : " input
 
+  echo -e "$Cyan \n === Bind IP MYSQL === $Color_Off"
+  sudo sed -i 's/127.0.0.1/192.168.25.3/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+  echo -e "$Green Success bind 192.168.25.3 $Color_Off"
+
   if [ $input -eq 1 ];then
 
      # Cloning Repository
