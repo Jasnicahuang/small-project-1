@@ -29,9 +29,9 @@ Cyan='\033[0;36m'         # Cyan
      if [ $smdb_choice == "Y" ]; then
 
         sudo mysql -u root <<CMD_EOF
-        CREATE USER 'devopscilsy'@'localhost' IDENTIFIED BY '1234567890';
-        GRANT ALL PRIVILEGES ON *.* TO 'devopscilsy'@'localhost';
-        CREATE DATABASE dbsosmed;
+	CREATE USER 'devopscilsy'@'localhost' IDENTIFIED BY '1234567890';
+	GRANT ALL PRIVILEGES ON *.* TO 'devopscilsy'@'localhost';
+	CREATE DATABASE dbsosmed;
 	CMD_EOF
         sudo mysql -u devopscilsy -p dbsosmed < /home/$USER/projects/social-media/dump.sql
      else
@@ -50,10 +50,10 @@ Cyan='\033[0;36m'         # Cyan
         if [ -z $wpdb_password ]; then wpdb_password='wp_password'; fi
 
         sudo mysql -u root <<CMD_EOF
-        CREATE USER '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
-        CREATE DATABASE $wpdb_name;
-        GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
-        FLUSH PRIVILEGES;
+	CREATE USER '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
+	CREATE DATABASE $wpdb_name;
+	GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
+	FLUSH PRIVILEGES;
 	CMD_EOF
 
      else
