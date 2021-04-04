@@ -16,9 +16,12 @@ Cyan='\033[0;36m'         # Cyan
   echo -e "1. Yes, Continue \n2. No, Abort \nOption (1|2) ? "
   read -p "Answer : " input
 
+  echo -e "$Cyan \n === Get My IP MYSQL === $Color_Off"
+  ip_address = echo $(hostname -I | awk '{print $2}')
+  echo -e "$Green IP Address = $ip_address $Color_Off"
   echo -e "$Cyan \n === Bind IP MYSQL === $Color_Off"
-  sudo sed -i 's/127.0.0.1/192.168.25.3/g' /etc/mysql/mysql.conf.d/mysqld.cnf
-  echo -e "$Green Success bind 192.168.25.3 $Color_Off"
+  sudo sed -i 's/127.0.0.1/'$ip_address'/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+  echo -e "$Green Success bind $ip_address $Color_Off"
   echo -e "$Cyan \n === Restart MYSQL Service === $Color_Off" 
   sudo service mysql restart
   echo -e "$Green Done $Color_Off"
@@ -38,9 +41,11 @@ Cyan='\033[0;36m'         # Cyan
      if [ $smdb_choice == "Y" -o $smdb_choice == "y" ]; then
 
         sudo mysql -u root <<CMD_EOF
-        CREATE USER 'devopscilsy'@'localhost' IDENTIFIED BY '1234567890';
-        GRANT ALL PRIVILEGES ON *.* TO 'devopscilsy'@'localhost';
+        CREATE USER 'devopscilsy'@'$ip_address' IDENTIFIED BY '1234567890';
+        GRANT ALL PRIVILEGES ON *.* TO 'devopscilsy'@'$ip_address';
         CREATE DATABASE dbsosmed;
+        use mysql;
+        CREATE USER 'root'@'%' IDENTIFIED BY '12345';
 CMD_EOF
         sudo mysql -u devopscilsy -p dbsosmed < /home/$USER/projects/social-media/dump.sql
      else
@@ -62,9 +67,9 @@ CMD_EOF
         if [ -z $wpdb_password ]; then wpdb_password='wp_password'; fi
 
         sudo mysql -u root <<CMD_EOF
-        CREATE USER '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
+        CREATE USER '$wpdb_user'@'$ip_address' IDENTIFIED BY '$wpdb_password';
         CREATE DATABASE $wpdb_name;
-        GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
+        GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'$ip_address' IDENTIFIED BY '$wpdb_password';
         FLUSH PRIVILEGES;
 CMD_EOF
 
