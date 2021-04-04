@@ -28,7 +28,7 @@ Cyan='\033[0;36m'         # Cyan
     echo -e "$Cyan \n === Clone Source Code Wordpress === $Color_Off"
     git clone https://github.com/Jasnicahuang/WordPress.git jasnica-wordpress
     echo -e "$Cyan \n === Clone Source Code Social-Media === $Color_Off"
-    git clone https://github.com/Jasnicahuang/sosial-media.git
+    git clone https://github.com/Jasnicahuang/sosial-media.git social-media
 
   # Preparing Setup Web
     echo -e "$Red \n === Remove Default Directory Web Server === $Color_Off"
@@ -49,11 +49,11 @@ Cyan='\033[0;36m'         # Cyan
         sudo chmod -R 755 /var/www/"${dir}.com"
         echo -e "$Yellow \n === Create File Config ${dir} in /etc/apache2/sites-available === $Color_Off"
         sudo echo -en "<Directory /var/www/html/${dir}>\n\tAllowOverride All\n</Directory>" >/etc/apache2/sites-available/"${dir}.com".conf
-        sudo echo -en "\n<VirtualHost *:80>\n\tServerAdmin admin@${dir}\n\tServerName ${dir}.com\n\tDocumentRoot /var/www/html/${dir}\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/${dir}.conf
+        sudo echo -en "\n<VirtualHost *:80>\n\tServerAdmin admin@${dir}\n\tServerName ${dir}.com\n\tDocumentRoot /var/www/html/${dir}\n\tErrorLog ${APACHE_LOG_DIR}/error.log\n\tCustomLog ${APACHE_LOG_DIR}/access.log combined\n</VirtualHost>" >>/etc/apache2/sites-available/"${dir}.com".conf
         echo -e "$Green \n === Enabled Link ${dir} === $Color_Off"
         sudo a2ensite "${dir}.com".conf
         echo -e "$Yellow \n === Adding Server Name ${dir} into /etc/hosts === $Color_Off"
-        sudo echo -en "$(hostname -I | awk '{print $2}')\t${dir}.com" >>/etc/hosts
+        sudo --sh -c "echo -en "$(hostname -I | awk '{print $2}')\t${dir}.com" >>/etc/hosts"
       done
     echo -e "$Cyan \n === Restart Service Apache === $Color_Off"
     sudo service apache2 restart
