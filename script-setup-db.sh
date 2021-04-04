@@ -55,7 +55,7 @@ CMD_EOF
                 read -r -p " [1.3] Enter Wordpress 'Database Password', you want to create : " wpdb_password
      else
          echo "Skipped" 
-    fi
+     fi
 
         if [ -z $wpdb_name ]; then wpdb_name='wordpress'; fi
         if [ -z $wpdb_user ]; then wpdb_user='wp_user'; fi
@@ -67,10 +67,6 @@ CMD_EOF
         GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'localhost' IDENTIFIED BY '$wpdb_password';
         FLUSH PRIVILEGES;
 CMD_EOF
-
-     else
-         echo "Skipped"
-     fi
 
      echo -e "$Green \n === Setup Database Server Completed === $Color_Off"
 
