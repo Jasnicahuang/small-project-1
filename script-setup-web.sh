@@ -64,7 +64,7 @@ Cyan='\033[0;36m'         # Cyan
         if [ ${repo[$i-1] == "social-media"}; then
            sudo sed -i 's/localhost/192.168.25.3/g' /var/www/"${repo[$i-1]}.com"/config.php
            echo "Done"
-        elif [ ${repo[$i-1] == "jasnica-wordpress" ]
+        elif [ ${repo[$i-1] == "jasnica-wordpress" ];
              read -r -p "Do you want to setup Wordpress Config? (Y/N) : " wpdb_choice
 	     if [ $wpdb_choice = 'Y' -o $wpdb_choice = 'y' ]; then
 		read -r -p " [1.1] Enter Wordpress 'Database Name', you want to create : " wpdb_name
@@ -74,12 +74,12 @@ Cyan='\033[0;36m'         # Cyan
 
              if [ -z $wpdb_name ]; then wpdb_name='wordpress'; fi
              if [ -z $wpdb_user ]; then wpdb_user='wp_user'; fi
-             if [ -z $wpdb_pass ]; then wpdb_password='wp_password'; fi
+             if [ -z $wpdb_password ]; then wpdb_password='wp_password'; fi
 
              sudo cp /var/www/"${repo[$i-1]}.com"/wp-config-sample.php /var/www/"${repo[$i-1]}.com"/wp-config.php
              sudo sed -i 's/database_name_here/'$wpdb_name'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
 	     sudo sed -i 's/username_here/'$wpdb_user'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
-	     sudo sed -i 's/password_here/'$wpdb_pass'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
+	     sudo sed -i 's/password_here/'$wpdb_password'/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
              sudo sed -i 's/localhost/192.168.25.3/g' /var/www/"${repo[$i-1]}.com"/wp-config.php
              echo "Done"
         else
