@@ -16,7 +16,7 @@ Cyan='\033[0;36m'         # Cyan
   echo -e "1. Yes, Continue \n2. No, Abort \nOption (1|2) ? "
   read -p "Answer : " input
 
-  echo -e "$Green IP Address = $ip_address $Color_Off"
+
   echo -e "$Cyan \n === Bind IP MYSQL === $Color_Off"
   sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
   echo -e "$Green Success bind $ip_address $Color_Off"
@@ -42,7 +42,7 @@ Cyan='\033[0;36m'         # Cyan
         CREATE USER 'devopscilsy'@'%' IDENTIFIED BY '1234567890';
         CREATE DATABASE dbsosmed;
         GRANT ALL PRIVILEGES ON *.* TO 'devopscilsy'@'%';
-	FLUSH PRIVILEGES;
+        FLUSH PRIVILEGES;
 CMD_EOF
      echo -e "$Cyan \n === Import Dump SQL to DBSOSMED === $Color_Off"
         sudo mysql -u devopscilsy -p dbsosmed < /home/$USER/projects/social-media/dump.sql
@@ -69,7 +69,7 @@ CMD_EOF
         CREATE USER '$wpdb_user'@'%' IDENTIFIED BY '$wpdb_password';
         CREATE DATABASE $wpdb_name;
         GRANT ALL PRIVILEGES ON $wpdb_name.* TO '$wpdb_user'@'%' IDENTIFIED BY '$wpdb_password';
-	FLUSH PRIVILEGES;
+        FLUSH PRIVILEGES;
 CMD_EOF
 
      echo -e "$Green \n === Setup Database Server Completed === $Color_Off"
